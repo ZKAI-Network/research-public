@@ -59,54 +59,6 @@ table.title-block i { color: var(--muted); }
 table.title-block {font-size: 3.75rem; line-height: 1.1; }
 table.date-block {font-size: 1rem; }
 
-/* ---------- Footnotes ---------- */
-
-/* Prevent a flash of broken layout before JS rewrites the DOM */
-html:not(.footnotes-ready) div.footnote,
-html:not(.footnotes-ready) sup a[href^="#footnote"] { visibility: hidden; }
-
-sup { line-height: 0; }
-sup a {
-  text-decoration: none;
-  border-bottom: 1px dotted currentColor;
-  padding: 0 0.1em;
-}
-sup a.footnote-ref {
-  position: relative;
-  cursor: help;
-}
-
-/* Wider hover preview bubble */
-sup a.footnote-ref:hover::after {
-  content: attr(data-footnote);
-  position: absolute;
-  left: 0;
-  top: 1.2em;
-  z-index: 20;
-  min-width: min(42ch, 90vw);    /* never too skinny */
-  max-width: min(72ch, 96vw);    /* but cap on wide screens */
-  white-space: normal;
-  overflow-wrap: anywhere;          /* break long tokens if needed */
-  text-align: left;
-  font-size: 0.9em;
-  line-height: 1.5;
-  background: var(--footnote-bg);
-  border: 1px solid var(--rule);
-  padding: 0.6em 0.7em;
-  border-radius: 8px;
-  box-shadow: 0 6px 28px -8px rgba(0,0,0,.25);
-}
-
-/* Endnotes list as you had */
-#notes { margin-top: 2.5em; }
-#notes .footnotes-rule { border: 0; height: 1px; background: var(--rule); margin: 2em 0 1.25em 0; }
-ol.footnotes { list-style: decimal; padding-left: 1.25em; margin: 0; }
-ol.footnotes > li { margin: 0 0 0.6em 0; padding-left: 0.25em; }
-ol.footnotes > li:target { background: var(--footnote-bg); }
-
-/* Hide inline blocks once JS marks them processed (kept from your CSS) */
-div.footnote.tm-footnote-processed { display: none !important; }
-
 /* Math stack (kept) */
 m|math, math {
   font-family: "STIX Two Math","TeX Gyre Pagella Math","Latin Modern Math","Cambria Math",serif;
@@ -115,3 +67,70 @@ m|math, math {
 /* Misc cleanups (kept) */
 font, class { font: inherit !important; color: inherit !important; }
 span[style*="margin-left"][style*="0em"] { display: none; }
+
+/* --- Footnote popovers (JS-enhanced) ------------------------------------- */
+
+/* Hide source footnote blocks only when JS is running (progressive enhancement). */
+.footnotes-enhanced .footnote { display: none; }
+
+.fn-wrapper { position: relative; display: inline; }
+
+/* The clickable/hoverable footnote reference */
+.fn-ref {
+  text-decoration: none;
+  cursor: help;
+  border-bottom: 1px dotted var(--muted);
+  color: inherit;
+}
+.fn-ref sup { line-height: 0; font-size: 0.8em; }
+.fn-ref:focus-visible {
+  outline: none;
+  background: var(--target-bg);
+  box-shadow: 0 0 0 3px var(--target-ring);
+  border-radius: 3px;
+}
+
+/* The bubble itself */
+.fn-bubble {
+  position: absolute;
+  z-index: 1000;
+  padding: 0.75rem 0.875rem;
+  background: var(--footnote-bg);
+  color: var(--text);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: 0 10px 22px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.06);
+  font-family: var(--serif);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  text-align: left;
+  max-width: 36rem;           /* capped width for readability */
+  width: max-content;         /* shrink to fit */
+  min-width: 20ch;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+.fn-bubble a { color: var(--accent); }
+
+/* Little caret arrow */
+.fn-bubble::after {
+  content: "";
+  position: absolute;
+  left: calc(50% + var(--arrow-shift, 0px));
+  width: 12px;
+  height: 12px;
+  background: var(--footnote-bg);
+  border: 1px solid var(--rule);
+  transform: translate(-50%, 0) rotate(45deg);
+}
+
+/* Position caret depending on placement */
+.fn-bubble.is-below::after { top: -7px;    border-left: 0; border-top: 0; }
+.fn-bubble.is-above::after { bottom: -7px; border-right: 0; border-bottom: 0; }
+
+/* Print: show the original bottom notes, hide popovers */
+@media print {
+  .fn-bubble { display: none !important; }
+  .footnote  { display: block !important; }
+}
+
