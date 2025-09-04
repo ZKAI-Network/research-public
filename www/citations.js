@@ -1,65 +1,70 @@
-/* footnotes.js — lightweight footnote popovers for this blog (no deps).
-   Looks for inline refs like <a href="#footnote-1"><sup>1</sup></a>
-   and footnote text inside .footnote blocks that start with "N. ".
-   Progressive enhancement: without JS the .footnote blocks remain visible. */
+/* citations.js — lightweight citation popovers (no deps).
+   Finds inline links like:  [ ... <a href="#bib-XYZ">3</a> ... ]
+   Looks up the corresponding entry in the References list where a <dd>
+   contains an anchor: <a id="bib-XYZ"></a> …reference text…
+   Progressive enhancement: the References section remains visible.
+*/
 
 (function () {
   'use strict';
 
   const d = document;
   const root = d.documentElement;
-  root.classList.add('js');                 // progressive enhancement hook
-  root.classList.add('footnotes-enhanced'); // hide .footnote only when JS runs
+  root.classList.add('js');
+  root.classList.add('citations-enhanced'); // hook if you ever want special styles
 
-  // Build a map: number -> HTML content extracted from .footnote blocks.
-  const noteMap = new Map();
+  // --- Build id -> HTML map from bibliography definitions -------------------
+  const citeMap = new Map();
 
-  // Find "1. ...", "2. ...", etc. inside .footnote blocks
-  d.querySelectorAll('.footnote').forEach(block => {
-    block.querySelectorAll('p').forEach(p => {
-      const txt = (p.textContent || '').trim();
-      const m = /^(\d+)\.\s*/.exec(txt);
-      if (!m) return;
-      const n = m[1];
-      if (noteMap.has(n)) return; // keep first occurrence if duplicated
+  // Each bibliography entry contains <a id="bib-..."></a> inside its <dd>
+  d.querySelectorAll('a[id^="bib-"]').forEach(anchor => {
+    const id = anchor.id;
+    const dd = anchor.closest('dd') || anchor.closest('p') || anchor.parentElement;
+    if (!dd) return;
 
-      // Remove the "N. " prefix from the HTML too
-      const html = p.innerHTML.replace(/^\s*\d+\.\s*/, '');
-      noteMap.set(n, sanitizeInlineHTML(html));
-    });
+    // Clone and strip the defining #bib- anchor(s) from the payload
+    const clone = dd.cloneNode(true);
+    clone.querySelectorAll('a[id^="bib-"]').forEach(n => n.remove());
+
+    // Prefer the inner <p> for a cleaner snippet if present
+    const payloadEl = clone.matches('dd') && clone.querySelector('p') ? clone.querySelector('p') : clone;
+
+    const html = sanitizeInlineHTML((payloadEl.innerHTML || '').trim());
+    citeMap.set(id, html);
   });
 
-  // Enhance each inline reference: <a href="#footnote-N"><sup>N</sup></a>
-  const refs = Array.from(d.querySelectorAll('a[href^="#footnote-"]'));
+  // --- Enhance each inline citation: <a href="#bib-...">N</a> ----------------
+  const refs = Array.from(d.querySelectorAll('a[href^="#bib-"]'));
   let uid = 0;
 
-  refs.forEach(a => {
-    const match = /#footnote-(\d+)/.exec(a.getAttribute('href'));
-    if (!match) return;
-    const n = match[1];
-    const contents = noteMap.get(n) || 'Footnote not found.';
+  refs.forEach(link => {
+    const href = link.getAttribute('href') || '';
+    const m = /^#(bib-[\w\-:.]+)$/.exec(href);
+    if (!m) return;
 
-    // Wrap the anchor so we can absolutely-position the bubble
+    const id = m[1];
+    const contents = citeMap.get(id) || 'Citation not found.';
+
+    // Wrap for positioning (reuse footnote classes for styling)
     const wrapper = d.createElement('span');
-    wrapper.className = 'fn-wrapper';
-    a.before(wrapper);
-    wrapper.appendChild(a);
+    wrapper.className = 'fn-wrapper cite-wrapper';
+    link.before(wrapper);
+    wrapper.appendChild(link);
 
     // Bubble
     const bubble = d.createElement('span');
-    bubble.className = 'fn-bubble is-below';
+    bubble.className = 'fn-bubble cite-bubble is-below';
     bubble.setAttribute('role', 'tooltip');
     bubble.hidden = true;
-    bubble.id = `fn-bubble-${++uid}`;
+    bubble.id = `cite-bubble-${++uid}`;
     bubble.innerHTML = contents;
     wrapper.appendChild(bubble);
 
-    // Mark reference & a11y wiring
-    a.classList.add('fn-ref');
-    a.setAttribute('aria-describedby', bubble.id);
-    if (!a.hasAttribute('tabindex')) a.setAttribute('tabindex', '0');
+    // A11y + keyboard toggling (reuse fn-ref styling)
+    link.classList.add('fn-ref', 'cite-ref');
+    link.setAttribute('aria-describedby', bubble.id);
+    if (!link.hasAttribute('tabindex')) link.setAttribute('tabindex', '0');
 
-    // Show/hide
     let hideTimer = null;
     const show = () => {
       clearTimeout(hideTimer);
@@ -70,10 +75,10 @@
 
     wrapper.addEventListener('mouseenter', show);
     wrapper.addEventListener('mouseleave', hide);
-    a.addEventListener('focus', show);
-    a.addEventListener('blur', hide);
+    link.addEventListener('focus', show);
+    link.addEventListener('blur', hide);
 
-    a.addEventListener('keydown', (e) => {
+    link.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') hide();
       if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); bubble.hidden ? show() : hide(); }
     });
@@ -82,7 +87,7 @@
     addEventListener('resize', () => { if (!bubble.hidden) positionBubble(bubble, wrapper); });
   });
 
-  // ---- helpers
+  // --- helpers ---------------------------------------------------------------
 
   function positionBubble(bubble, wrapper) {
     // reset
@@ -98,7 +103,7 @@
     if (wasHidden) bubble.hidden = false; // ensure measurable
     const bRect = bubble.getBoundingClientRect();
 
-    // choose above/below depending on available space
+    // above/below depending on available space
     const spaceBelow = innerHeight - wRect.bottom;
     const spaceAbove = wRect.top;
     const placeBelow = spaceBelow >= spaceAbove;
@@ -128,7 +133,7 @@
 
   // Minimal inline sanitizer: unwrap unknown wrappers, keep simple inline tags & safe links
   function sanitizeInlineHTML(html) {
-    const allowed = new Set(['A','EM','I','STRONG','B','CODE','KBD','SPAN','SUB','SUP','S','U','SMALL','BR']);
+    const allowed = new Set(['A','EM','I','STRONG','B','CODE','KBD','SPAN','SUB','SUP','S','U','SMALL','CITE','BR']);
     const root = document.createElement('div');
     root.innerHTML = html;
 
@@ -136,7 +141,8 @@
       [...node.childNodes].forEach(child => {
         if (child.nodeType === 1) {
           const el = child;
-          if (!allowed.has(el.tagName)) {
+          const tag = el.tagName ? el.tagName.toUpperCase() : ''; // robust for XHTML
+          if (!allowed.has(tag)) {
             const frag = document.createDocumentFragment();
             while (el.firstChild) frag.appendChild(el.firstChild);
             el.replaceWith(frag);
@@ -145,8 +151,8 @@
             [...el.attributes].forEach(attr => {
               const name = attr.name.toLowerCase();
               if (name.startsWith('on')) el.removeAttribute(attr.name);
-              if (el.tagName === 'A' && name === 'href') {
-                const href = attr.value.trim();
+              if (tag === 'A' && name === 'href') {
+                const href = (attr.value || '').trim();
                 if (/^\s*javascript:/i.test(href)) el.removeAttribute('href');
               } else if (!['href','title','aria-label'].includes(name)) {
                 el.removeAttribute(attr.name);

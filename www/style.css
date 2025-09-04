@@ -71,7 +71,7 @@ span[style*="margin-left"][style*="0em"] { display: none; }
 /* --- Footnote popovers (JS-enhanced) ------------------------------------- */
 
 /* Hide source footnote blocks only when JS is running (progressive enhancement). */
-.footnotes-enhanced .footnote { display: none; }
+.footnotes-enhanced .footnote {  }
 
 .fn-wrapper { position: relative; display: inline; }
 
