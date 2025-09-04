@@ -1,0 +1,117 @@
+:root{
+  --content-max: 72ch;
+  --line: 1.7;
+  --accent: #1a73e8;
+  --muted:  #6b7280;
+  --text:   #111827;
+  --rule:   #e5e7eb;
+  --footnote-bg: #fffdf3;
+  --target-bg: #fff7cc;
+  --target-ring: #f59e0b33;
+
+  /* Fonts: match the reference blog’s feel (serif body + modern sans UI) */
+  --sans:  "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  --serif: "Source Serif 4", ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --mono:  "Liberation Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Base */
+html, body { background: #fff; }
+body {
+  color: var(--text);
+  font-size: 16px;
+  line-height: var(--line);
+  font-family: var(--sans);          /* body in editorial serif */
+  text-align: justify;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  margin: 0 auto;
+  padding: clamp(1.25rem, 2vw + 0.5rem, 3rem);
+  max-width: var(--content-max);
+  text-rendering: optimizeLegibility;
+
+  hyphens: auto; -webkit-hyphens: auto; -ms-hyphens: auto;
+  text-justify: inter-word;
+  hanging-punctuation: first allow-end;
+  orphans: 2;
+  widows: 2;
+  
+  letter-spacing: -0.01em;
+}
+
+/* Headings in clean sans for contrast (like the reference) */
+h1, h2, h3, h4, h5, h6, table.title-block table.date-block strong {
+  font-family: var(--sans);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+  letter-spacing: -0.01em;
+  margin: 2em 0 0.75em 0;
+}
+h1 { font-size: 3.75rem; margin-top: 0; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.25rem; }
+/* Title block fine-tuning */
+table.title-block { width: 100%; margin: 0 0 1.5rem 0 !important; text-align: left;}
+table.title-block td { padding: 0 !important; }
+table.title-block i { color: var(--muted); }
+table.title-block {font-size: 3.75rem; line-height: 1.1; }
+table.date-block {font-size: 1rem; }
+
+/* ---------- Footnotes ---------- */
+
+/* Prevent a flash of broken layout before JS rewrites the DOM */
+html:not(.footnotes-ready) div.footnote,
+html:not(.footnotes-ready) sup a[href^="#footnote"] { visibility: hidden; }
+
+sup { line-height: 0; }
+sup a {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  padding: 0 0.1em;
+}
+sup a.footnote-ref {
+  position: relative;
+  cursor: help;
+}
+
+/* Wider hover preview bubble */
+sup a.footnote-ref:hover::after {
+  content: attr(data-footnote);
+  position: absolute;
+  left: 0;
+  top: 1.2em;
+  z-index: 20;
+  min-width: min(42ch, 90vw);    /* never too skinny */
+  max-width: min(72ch, 96vw);    /* but cap on wide screens */
+  white-space: normal;
+  overflow-wrap: anywhere;          /* break long tokens if needed */
+  text-align: left;
+  font-size: 0.9em;
+  line-height: 1.5;
+  background: var(--footnote-bg);
+  border: 1px solid var(--rule);
+  padding: 0.6em 0.7em;
+  border-radius: 8px;
+  box-shadow: 0 6px 28px -8px rgba(0,0,0,.25);
+}
+
+/* Endnotes list as you had */
+#notes { margin-top: 2.5em; }
+#notes .footnotes-rule { border: 0; height: 1px; background: var(--rule); margin: 2em 0 1.25em 0; }
+ol.footnotes { list-style: decimal; padding-left: 1.25em; margin: 0; }
+ol.footnotes > li { margin: 0 0 0.6em 0; padding-left: 0.25em; }
+ol.footnotes > li:target { background: var(--footnote-bg); }
+
+/* Hide inline blocks once JS marks them processed (kept from your CSS) */
+div.footnote.tm-footnote-processed { display: none !important; }
+
+/* Math stack (kept) */
+m|math, math {
+  font-family: "STIX Two Math","TeX Gyre Pagella Math","Latin Modern Math","Cambria Math",serif;
+}
+
+/* Misc cleanups (kept) */
+font, class { font: inherit !important; color: inherit !important; }
+span[style*="margin-left"][style*="0em"] { display: none; }

@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:x="https://www.texmacs.org/2002/extensions" xmlns:m="http://www.w3.org/1998/Math/MathML">
+  <head>
+    <title>The quest for social sovereignty #3</title>
+    <meta content="TeXmacs 2.1" name="generator"></meta>
+    <style type="text/css">
+      body { text-align: justify } h5 { display: inline; padding-right: 1em }
+      h6 { display: inline; padding-right: 1em } table { border-collapse:
+      collapse } td { padding: 0.2em; vertical-align: baseline } dt { float:
+      left; min-width: 1.75em; text-align: right; padding-right: 0.75em;
+      font-weight: bold; } dd { margin-left: 2.75em; padding-bottom: 0.25em; }
+      dd p { padding-top: 0em; } .subsup { display: inline; vertical-align:
+      -0.2em } .subsup td { padding: 0px; text-align: left} .fraction {
+      display: inline; vertical-align: -0.8em } .fraction td { padding: 0px;
+      text-align: center } .wide { position: relative; margin-left: -0.4em }
+      .accent { position: relative; margin-left: -0.4em; top: -0.1em }
+      .title-block { width: 100%; text-align: center } .title-block p {
+      margin: 0px } .compact-block p { margin-top: 0px; margin-bottom: 0px }
+      .left-tab { text-align: left } .center-tab { text-align: center }
+      .balloon-anchor { border-bottom: 1px dotted #000000; outline: none;
+      cursor: help; position: relative; } .balloon-anchor [hidden] {
+      margin-left: -999em; position: absolute; display: none; }
+      .balloon-anchor: hover [hidden] { position: absolute; left: 1em; top:
+      2em; z-index: 99; margin-left: 0; width: 500px; display: inline-block; }
+      .balloon-body { } .ornament { border-width: 1px; border-style: solid;
+      border-color: black; display: inline-block; padding: 0.2em; } .right-tab
+      { float: right; position: relative; top: -1em; } .no-breaks {
+      white-space: nowrap; } 
+    </style>
+    <link href="style.css" type="text/css" rel="stylesheet"></link>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" language="javascript"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&family=STIX+Two+Math:wght@400;700&display=swap" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <table class="title-block" style="margin-bottom: 2em">
+      <tr>
+        <td><table class="title-block" style="margin-top: 0.5em; margin-bottom: 0.5em">
+          <tr>
+            <td><font style="font-size: 168.2%"><strong>The quest for social sovereignty
+            #3 - prediction markets</strong></font></td>
+          </tr>
+        </table><table class="date-block" style="margin-top: 0.5em; margin-bottom: 0.5em">
+          <tr>
+            <td><i>Sep 4, 2025</i></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table>
+    <p>
+      Recall that we seek social epistemic mechanisms that are decentralized,
+      permissionless, secure and which carry truth-telling incentives. In our
+      previous blog post, we explored Community Notes' Birdwatch model, and
+      concluded that it cannot be simultaneously permissionless and secure,
+      and that it does not have truth-telling incentives. We point out again
+      that Community Notes has been a massive success, impacting social
+      discourse in a positive and constructive way, even if its underlying
+      model was not theoretically sound. This motivates us to continue our
+      search for better mechanisms, even though finding one that
+      simultaneously satisfies all of our desiderata is an extremely
+      challenging, if not impossible, task.
+    </p>
+    <p>
+      In this blog post, we discuss a few mechanisms, among them one that
+      recently gained enormous momentum: prediction markets.
+    </p>
+    <h2 id="auto-1">Prediction Markets<span style="margin-left: 1em"></span></h2>
+    <p>
+      What distinguishes prediction markets and betting houses is that the
+      former is specifically designed for information elicitation. The price
+      of a security in a prediction market is aggregated knowledge of the
+      probability of a future event. Anyone who has strong beliefs in either
+      direction away from the current security price can, according to their
+      beliefs, make a profitable purchase of either the security itself or of
+      its complementary securities. Conversely, at any particular point in
+      time, no one is willing to bet against the knowledge encoded in the
+      current security price.
+    </p>
+    <p>
+      While it may be true that trading fees can reduce the accuracy of the
+      encoded probability and that users have different risk profiles and
+      differently sized pools of capital, prediction markets are still the
+      gold-standard of social epistemic mechanisms in terms of security.
+      Truth-telling, i.e., betting on what one believes, is a dominant
+      strategy
+      <div class="footnote">
+        <font style="font-size: 77.1%"><div align="justify">
+          <div style="margin-left: 0px">
+            <div style="margin-right: 0px">
+              <class style="font-style: normal"><p>
+                1. The literature also describes truth-telling as being
+                myopically incentive-compatible.
+              </p></class>
+            </div>
+          </div>
+        </div></font>
+      </div>
+      <span style="margin-left: 0em"></span>
+      <a id="footnr-1"></a>
+      <sup><class style="font-style: normal"><a href="#footnote-1">1</a></class></sup>
+      , and forming coalitions is not profitable.
+    </p>
+    <p>
+      Prediction markets have a long history. Several early prediction markets
+      were used to predict the outcome of elections [<a href="#bib-IowaElectronicMarkets">14</a>], movie
+      box-office profits [<a href="#bib-HollywoodStockExchange">12</a>] and even the time for the delivery
+      of a construction project [<a href="#bib-TheGatesHilllmanPredictionMarket">18</a>]. Truthcoin [<a href="#bib-Truthcoin">21</a>]
+      is, to our knowledge, the first design of a prediction market on a
+      blockchain, and one of its goals was finding correlations between policy
+      decisions and their outcomes [<a href="#bib-TruthcoinWhitepaper">22</a>]. Using prediction markets
+      to govern decisions is called Futarchy [<a href="#bib-Futarchy">10</a>], a proposition
+      by famous economist Robin Hanson [<a href="#bib-RobinHanson">11</a>], who is known as the
+      father of prediction markets.
+    </p>
+    <p>
+      Furthermore, prediction markets have a wide range of untapped
+      application potential: mainstream prediction markets, such as Polymarket
+      [<a href="#bib-Polymarket">19</a>] and Kalshi [<a href="#bib-Kalshi">15</a>], deal only with
+      <em>simple securities</em>, usually with only a few, one for each
+      outcome. However, more advanced prediction markets support much larger
+      outcome spaces and <em>complex securities</em> that describe sets of
+      these outcomes. For instance, in permutation or ranking markets, there
+      are \(n!\) outcomes for \(n\) players, but users could bet on \(n (n -
+      1)\) securities of the form &ldquo;player \(i\) finishes ahead of player
+      \(j\)&rdquo; [<a href="#bib-OptimizationBasedFrameworkAutomatedMarketMaking2010">1</a>] or \(n^2\) ones of the form &ldquo;player
+      \(i\) finishes in position \(j\)&rdquo; [<a href="#bib-BettingOnPermutations">5</a>][<a href="#bib-ParimutuelBettingPermutations">3</a>].
+      Other possibilities include tournament markets [<a href="#bib-TournamentPredictionMarkets">6</a>],
+      hierarchical markets [<a href="#bib-EventHierarchyPredictionMarket">8</a>] and continuous and geometric
+      markets [<a href="#bib-OptimizationBasedFrameworkAutomatedMarketMaking2011">2</a>][<a href="#bib-GeometricPredictionMarket">17</a>][<a href="#bib-MarketMakersForCombinatorialSecurities">13</a>]. Application
+      possibilities are numerous, from more efficient sports betting to
+      earthquake or hurricane insurance.
+    </p>
+    <p>
+      Unfortunately, the Achilles heel of prediction markets is that they are
+      not decentralized. In order to settle trades at the end of a market, the
+      mechanism relies on an <em>oracle</em>. There have been occasions in
+      which high-stakes prediction markets were resolved against their
+      final-price consensus by their oracles [<a href="#bib-RektNews-HedgingBets">20</a>]. As a
+      consequence, self-resolving prediction markets have been proposed, and
+      we shall consider at least one of them in a future blog post.
+    </p>
+    <h2 id="auto-2">Omniscience<span style="margin-left: 1em"></span></h2>
+    <p>
+      Simply because prediction markets are centralized, it does not mean that
+      they are not useful for moderation in decentralized social media.
+      Vitalik Buterin has considered the use of prediction markets as an
+      extension of a central moderator's capabilities [<a href="#bib-VitalikModerationFutarchy">4</a>].
+      Essentially, every social media item would get its own individual
+      market, that predicts whether this central moderator, called Doug, will
+      decide to moderate the item or not, when, and if, he looks at the item.
+      Vitalik's insight is that, even if Doug only actually looks at a small
+      fraction of the items, the incentive for traders is to trade honestly in
+      <em>all</em> the markets, and their security prices can be used for
+      moderation decisions. Trades in markets whose items Doug does not
+      inspect are reversed, and the only markets where trades are settled are
+      the ones manually resolved by Doug.
+    </p>
+    <p>
+      Of course, there is a significant amount of details that have to be
+      filled in, such as how to reverse trades and how to mitigate the
+      opportunity cost of capital lingering in these markets. One detail that
+      we address is how to bootstrap liquidity in these markets, as, even with
+      fees, market creators may have impermanent loss of their initial
+      liquidity. We propose to only start prediction markets on flagged items,
+      because the item author and the moderator are two necessarily
+      disagreeing parties and, each under their own beliefs, are expected to
+      turn a profit. This does require authors to place some collateral on
+      each item, but that can be returned to them if the post ages enough
+      without flags, if the market is reversed or if they win Doug's favor in
+      an arbitration.
+    </p>
+    <p>
+      This idea is quite useful because it solves the <em>alignment
+      problem</em> between individual moderators and moderation companies (or
+      individuals, such as Doug) offering moderation services. Presently,
+      moderators have very little incentive to stay honest. If and when one of
+      their decisions gets audited, they can claim an honest mistake or simply
+      leave the system, because they do not have much collateral staked. It is
+      thus hard to have a healthy market of moderation services when these
+      services hire from a common pool of moderators. In contrast, applying
+      prediction markets affords Doug an &ldquo;epistemic extension,&rdquo;
+      which we call <em>omniscience</em>, and, the more trusted Doug is, the
+      larger and sharper this extension can become. Paradoxically, centralized
+      prediction markets can help decentralize moderation by the
+      straightforward introduction of competition, with many people taking the
+      role of Doug and with many competing moderation policies.
+    </p>
+    <p>
+      There are two other methods to achieve the omniscience effect, both
+      mentioned in a thread [<a href="#bib-DougPoker">7</a>] started by Konstantin Kladko [<a
+      href="#bib-kladkogex">16</a>] as a response to Vitalik.
+    </p>
+    <h2 id="auto-3">Robin Hanson's Double or Nothing Lawsuits<span style="margin-left: 1em"></span></h2>
+    <p>
+      Robin Hanson proposes a simple mechanism [<a href="#bib-DoubleOrNothingLawsuits">9</a>] to
+      disincentivize wrong behavior even when the maximum harm caused is
+      small, making litigation unattractive. He proposed using a randomizer
+      &ldquo;office&rdquo; or machine, in which a legal claim could be doubled
+      or destroyed, with 50% chance of each. This way, the value of the claim
+      doesn't change in expectation, but small claims could potentially become
+      large claims worth legally pursuing, even though only with a tiny
+      probability. The brilliance of this scheme is that litigation would only
+      occur in a small fraction of claims, with its cost amortized, while the
+      expected loss from misbehavior would be closer to the damage
+      restitution, rather than to zero.
+    </p>
+    <p>
+      One challenge with this idea in social media is that some users have
+      close to zero collateral, and they would not be able to pay an amount
+      that has been doubled many times. However, maybe moderators can. Doug
+      could require his moderators to deposit a significant collateral \(C\)
+      (say \(10^6\) sats) for taking part in his moderation company. Those
+      moderators would then get the power to take down items on behalf of
+      Doug. Item authors that believe they have been wronged by a moderation
+      decision can buy a small claim of \(c\) (e.g., \(10^4\) sats) against
+      the moderator for a much cheaper price \(p\) (maybe \(500\) sats), and,
+      rather than repeatedly doubling it, they can directly increase it to
+      \(C\) with probability \(c / C\). Only these large claims would require
+      intervention from Doug. If the author has Doug's favor, he receives \(C
+      + p\) from the fired moderator's collateral and the initial purchase.
+      Otherwise, if Doug is not summoned or favors the moderator, the
+      moderator is paid \(p\).
+    </p>
+    <p>
+      Under this scheme, a Bayesian moderator has an incentive to work for
+      Doug as long as his decision accuracy is more than \(1 - p / c\), and a
+      Bayesian user has an incentive to buy claims when their judgment
+      accuracy is at least roughly \(p / c\). Thus, there is considerable
+      margin for the choice of the parameters \(c\) and \(p\), accommodating
+      other risk profiles.
+    </p>
+    <h2 id="auto-4">Moderation Poker<span style="margin-left: 1em"></span></h2>
+    <p>
+      
+    </p>
+    <p>
+      One downside of the previous approach is that the damages from the
+      removal of a particular item are not accounted for, only the average
+      damages. Thus, an ideological moderator still has the incentive to
+      censor only the items he opposes that are gaining significant traction,
+      since the social cost to him of the success of the item outweighs his
+      expected loss in the mechanism. To some extent, this issue can also
+      affect the first approach with prediction markets, because the moderator
+      could bet on Doug not inspecting the item.
+    </p>
+    <p>
+      To overcome this issue, we need to allow every dispute to potentially
+      escalate to Doug. Like in our proposition on how to bootstrap liquidity,
+      when an author posts an item, they deposit a small amount of collateral,
+      which can be refunded to them later. In order for a moderator to flag
+      the item, they have to also commit collateral, which becomes the item's
+      pot. Then, starting with the author, each side takes turns at least
+      doubling the pot. If a side folds and does not double the pot, the other
+      side takes the whole pot and the right over the moderation outcome.
+      Otherwise, eventually the pot size will become large enough, say \(P\),
+      to merit the intervention of Doug, who resolves the dispute and gives
+      the pot and the moderation outcome to the winner.
+    </p>
+    <p>
+      One advantage of this scheme is that third parties besides the author
+      and moderator can contribute to the dispute, helping increase the pot.
+      At the end, the pot would be split proportionally to contributions to
+      the members of the winning side. However, still, in order not to depend
+      on others, authors have to keep about \(kP / 2\) capital available in
+      order to unconditionally defend \(k\) of their items, and that is also
+      the sum that honest moderators have to keep to unconditionally defend
+      \(k\) moderation decisions.
+    </p>
+    <p>
+      Besides this capital inefficiency, there is also the issue of
+      Denial-of-Service, where a whale trying to disrupt the moderation system
+      escalates \(n\) disputes, where \(n\) is much larger than Doug's
+      throughput in several decades. While eventually the whale might lose up
+      to about \(nP / 2\) in capital, the moderation will stop and users will
+      have their capital locked in for unreasonable amounts of time.
+    </p>
+    <h2 id="auto-5">Conclusion<span style="margin-left: 1em"></span></h2>
+    <p>
+      We have explored oracle-dependent mechanisms to epistemically extend
+      centralized moderation in order to enable a free-market of moderation
+      services. We found that, even under the big assumption of a trusted
+      oracle, incentive issues still remain, particularly around the
+      <em>exogenous value</em> of moderation decisions, which are hard for
+      mechanisms to account for. While the mechanisms described are expected
+      to work effectively and efficiently for most items, making sure that
+      they work for items of high exogenous value is still elusive.
+    </p>
+    <p>
+      In practice, the assumption of a trusted oracle is rather brittle, since
+      power corrupts, and there are always lingering threats of bribery,
+      blackmail, exit scams and ideological co-optation. In some sense, the
+      success of systems based on centralized oracles can be their downfall,
+      as the more capital it manages, the bigger the target they are and the
+      bigger the risk of these threats.
+    </p>
+    <p>
+      Addressing this concern, in our next blog post, we will delve into the
+      area of Information Elicitation Without Verification (IEWV), which
+      considers epistemic mechanisms that do not necessitate oracles, and yet
+      still maintain truth-telling incentives.
+    </p>
+    <h2 id="auto-6">References<span style="margin-left: 1em"></span></h2>
+    <div class="compact-block" style="text-indent: 0em">
+      <font style="font-size: 84.0%"><dl>
+        <p>
+          <dt>
+            <strong>[1]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-OptimizationBasedFrameworkAutomatedMarketMaking2010"></a>Jacob Abernethy, Yiling Chen, and Jennifer Wortman
+              Vaughan. An optimization-based framework for automated
+              market-making. 2010.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[2]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-OptimizationBasedFrameworkAutomatedMarketMaking2011"></a>Jacob Abernethy, Yiling Chen, and Jennifer Wortman
+              Vaughan. An optimization-based framework for automated
+              market-making. In <i>Proceedings of the 12th ACM Conference on
+              Electronic Commerce</i>, EC '11, pages 297&ndash;306. New York,
+              NY, USA, 2011. Association for Computing Machinery.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[3]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-ParimutuelBettingPermutations"></a>Shipra Agrawal, Zizhuo Wang, and Yinyu Ye. Parimutuel
+              betting on permutations. 2008.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[4]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-VitalikModerationFutarchy"></a>Vitalik Buterin. Prediction markets for content
+              curation DAOs. <a href="https://ethresear.ch/t/prediction-markets-for-content-curation-daos/1312"><tt>https://ethresear.ch/t/prediction-markets-for-content-curation-daos/1312</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[5]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-BettingOnPermutations"></a>Yiling Chen, Lance Fortnow, Evdokia Nikolova, and
+              David Pennock. Betting on permutations. Pages 326&ndash;335. 06
+              2007.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[6]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-TournamentPredictionMarkets"></a>Yiling Chen, Sharad Goel, and David M. Pennock.
+              Pricing combinatorial markets for tournaments. In <i>Proceedings
+              of the Fortieth Annual ACM Symposium on Theory of Computing</i>,
+              STOC '08, pages 305&ndash;314. New York, NY, USA, 2008.
+              Association for Computing Machinery.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[7]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-DougPoker"></a><a href="https://ethresear.ch/t/prediction-markets-for-content-curation-daos/1312/9"><tt>https://ethresear.ch/t/prediction-markets-for-content-curation-daos/1312/9</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[8]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-EventHierarchyPredictionMarket"></a>Mingyu Guo and David M. Pennock. Combinatorial
+              prediction markets for event hierarchies. In <i>Proceedings of
+              The 8th International Conference on Autonomous Agents and
+              Multiagent Systems - Volume 1</i>, AAMAS '09, pages
+              201&ndash;208. Richland, SC, 2009. International Foundation for
+              Autonomous Agents and Multiagent Systems.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[9]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-DoubleOrNothingLawsuits"></a>Robin Hanson. Double or nothing lawsuits. <a href="https://mason.gmu.edu/~rhanson/gamblesuits.html"><tt>https://mason.gmu.edu/~rhanson/gamblesuits.html</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[10]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-Futarchy"></a>Robin Hanson. Futarchy: vote values, but bet beliefs.
+              <a href="https://mason.gmu.edu/~rhanson/futarchy.html"><tt>https://mason.gmu.edu/~rhanson/futarchy.html</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[11]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-RobinHanson"></a>Robin Hanson. Robin Hanson. <a href="https://mason.gmu.edu/~rhanson/"><tt>https://mason.gmu.edu/~rhanson/</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[12]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-HollywoodStockExchange"></a>Hollywood stock exchange. <a href="https://www.hsx.com/"><tt>https://www.hsx.com/</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[13]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-MarketMakersForCombinatorialSecurities"></a>Prommy Sultana Hossain, Xintong Wang, and Fang-Yi Yu.
+              Designing automated market makers for combinatorial securities:
+              a geometric viewpoint. 2024.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[14]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-IowaElectronicMarkets"></a>Iowa electronic markets. <a href="https://iem.uiowa.edu/iem/"><tt>https://iem.uiowa.edu/iem/</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[15]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-Kalshi"></a>Kalshi. <a href="https://kalshi.com/"><tt>https://kalshi.com/</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[16]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-kladkogex"></a>Konstantin Kladko, FAIR Chain. <a href="https://ethresear.ch/u/kladkogex/summary"><tt>https://ethresear.ch/u/kladkogex/summary</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[17]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-GeometricPredictionMarket"></a>Nishanth Nakshatri, Arjun Menon, C. Lee Giles, Sarah
+              Rajtmajer, and Christopher Griffin. Design and analysis of a
+              synthetic prediction market using dynamic convex sets. 2021.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[18]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-TheGatesHilllmanPredictionMarket"></a>Abraham Othman and Tuomas Sandholm. The Gates Hillman
+              prediction market. <i>Review of Economic Design</i>,
+              17:95&ndash;128, 2013.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[19]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-Polymarket"></a>Polymarket. <a href="https://polymarket.com/"><tt>https://polymarket.com/</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[20]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-RektNews-HedgingBets"></a>Rekt. Hedging bets. <a href="https://rekt.news/hedging-bets/"><tt>https://rekt.news/hedging-bets/</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[21]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-Truthcoin"></a>Paul Sztorc. Truthcoin. <a href="https://www.truthcoin.info/"><tt>https://www.truthcoin.info/</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[22]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-TruthcoinWhitepaper"></a>Paul Sztorc. Truthcoin: peer-to-peer oracle system
+              and prediction marketplace. <a href="https://bitcoinhivemind.com/papers/truthcoin-whitepaper.pdf"><tt>https://bitcoinhivemind.com/papers/truthcoin-whitepaper.pdf</tt></a>.
+            </p>
+          </dd>
+        </p>
+      </dl></font>
+    </div>
+    <script type="text/javascript" src="footnotes.js"></script>
+  </body>
+</html>
