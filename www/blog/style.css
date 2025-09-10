@@ -134,3 +134,9 @@ span[style*="margin-left"][style*="0em"] { display: none; }
   .footnote  { display: block !important; }
 }
 
+.rss-btn img {
+  display: block;
+  border-radius: 12px;       /* matches the button shape */
+}
+.rss-btn:hover img { filter: brightness(1.05); }
+
