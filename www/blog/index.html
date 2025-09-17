@@ -124,15 +124,26 @@
     }
 
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+    
+    /* Header brand logo: fixed but slightly responsive size */
+.site-header .brand .logo {
+  height: clamp(24px, 2.8vw, 28px);
+  width: auto;
+  max-width: none;     /* don't let global max-width:100% shrink it */
+  display: block;      /* aligns baseline nicely in the header */
+}
+
   </style>
 </head>
 <body>
   <!-- Header -->
   <header class="site-header">
     <div class="inner bar">
-      <a href="https://getembed.ai" target="_blank" rel="noopener">
-        <img src="https://files.readme.io/b725661d2e859430e84f6b3c9595693f11b37800844655f16745775c4f5eac7a-small-Embed_Full_Logo_Light.png" alt="embed logo" height="28" />
-      </a>
+      <a class="brand" href="https://getembed.ai" target="_blank" rel="noopener">
+  <img class="logo" src="https://files.readme.io/b725661d2e859430e84f6b3c9595693f11b37800844655f16745775c4f5eac7a-small-Embed_Full_Logo_Light.png"
+       alt="embed logo" />
+</a>
+
 
 
       <a href="feed.atom" aria-label="Atom feed" class="rss-btn">
