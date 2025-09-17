@@ -140,3 +140,55 @@ span[style*="margin-left"][style*="0em"] { display: none; }
 }
 .rss-btn:hover img { filter: brightness(1.05); }
 
+/* --- Mobile -------------------------------------------- */
+
+/* Make media scale nicely */
+*, *::before, *::after { box-sizing: border-box; }
+img, svg, video, canvas, iframe { display: block; max-width: 100%; height: auto; }
+
+/* Avoid iOS “auto zoom” / unexpected text scaling */
+html { -webkit-text-size-adjust: 100%; }
+
+/* Respect notches / rounded corners on modern phones */
+@supports (padding: max(0px)) {
+  body {
+    /* keep your existing top/bottom padding; strengthen left/right for safe areas */
+    padding-left: max(env(safe-area-inset-left), clamp(1rem, 4vw, 1.5rem));
+    padding-right: max(env(safe-area-inset-right), clamp(1rem, 4vw, 1.5rem));
+  }
+}
+
+/* Tweak typography and layout for narrow screens */
+@media (max-width: 768px) {
+  :root { --content-max: 68ch; }                 /* a touch narrower reads better on mobile */
+
+  body {
+    font-size: 17px;                             /* up from 16px */
+    line-height: var(--line);
+    padding: clamp(1rem, 4vw, 1.5rem);
+    text-align: left;                            /* justified text can “river” on phones */
+    text-justify: auto;
+  }
+
+  /* Scale down oversized desktop headings */
+  h1 { font-size: clamp(1.75rem, 7.5vw, 2.25rem); }
+  h2 { font-size: clamp(1.25rem, 5.5vw, 1.75rem); }
+  h3 { font-size: clamp(1.125rem, 4.5vw, 1.35rem); }
+
+  /* Your title block was set to 3.75rem; make it fluid on mobile */
+  table.title-block { font-size: clamp(1.75rem, 6.5vw, 2.25rem); }
+
+  /* Kill hard-coded left/right margins emitted by the generator on small screens */
+  [style*="margin-left:"][style*="px"] { margin-left: 0 !important; }
+  [style*="margin-right:"][style*="px"] { margin-right: 0 !important; }
+
+  /* Constrain popovers and long equations */
+  .fn-bubble { max-width: min(92vw, 36rem); }
+  mjx-container[jax="CHTML"] { max-width: 100%; overflow-x: auto; }
+}
+
+/* Comfortable reading size on very small phones */
+@media (max-width: 480px) {
+  body { font-size: 18px; }
+}
+
