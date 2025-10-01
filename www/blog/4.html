@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:x="https://www.texmacs.org/2002/extensions" xmlns:m="http://www.w3.org/1998/Math/MathML">
+  <head>
+    <title>The quest for social sovereignty #4</title>
+    <meta charset="utf-8" content="TeXmacs 2.1.4" name="generator"></meta>
+    <style type="text/css">
+      body { text-align: justify } h5 { display: inline; padding-right: 1em }
+      h6 { display: inline; padding-right: 1em } table { border-collapse:
+      collapse } td { padding: 0.2em; vertical-align: baseline } dt { float:
+      left; min-width: 1.75em; text-align: right; padding-right: 0.75em;
+      font-weight: bold; } dd { margin-left: 2.75em; padding-bottom: 0.25em; }
+      dd p { padding-top: 0em; } .subsup { display: inline; vertical-align:
+      -0.2em } .subsup td { padding: 0px; text-align: left} .fraction {
+      display: inline; vertical-align: -0.8em } .fraction td { padding: 0px;
+      text-align: center } .wide { position: relative; margin-left: -0.4em }
+      .accent { position: relative; margin-left: -0.4em; top: -0.1em }
+      .title-block { width: 100%; text-align: center } .title-block p {
+      margin: 0px } .compact-block p { margin-top: 0px; margin-bottom: 0px }
+      .left-tab { text-align: left } .center-tab { text-align: center }
+      .balloon-anchor { border-bottom: 1px dotted #000000; outline: none;
+      cursor: help; position: relative; } .balloon-anchor [hidden] {
+      margin-left: -999em; position: absolute; display: none; }
+      .balloon-anchor: hover [hidden] { position: absolute; left: 1em; top:
+      2em; z-index: 99; margin-left: 0; width: 500px; display: inline-block; }
+      .balloon-body { } .ornament { border-width: 1px; border-style: solid;
+      border-color: black; display: inline-block; padding: 0.2em; } .right-tab
+      { float: right; position: relative; top: -1em; } .no-breaks {
+      white-space: nowrap; } .underline { text-decoration: underline; }
+      .overline { text-decoration: overline; } .strike-through {
+      text-decoration: line-through; } del { text-decoration: line-through
+      wavy red; } .fill-out { text-decoration: underline dotted; } 
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link href="style.css" type="text/css" rel="stylesheet"></link>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" language="javascript"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&family=STIX+Two+Math:wght@400;700&display=swap" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <table class="title-block" style="margin-bottom: 2em">
+      <tr>
+        <td><table class="title-block" style="margin-top: 0.5em; margin-bottom: 0.5em">
+          <tr>
+            <td><font style="font-size: 168.2%"><strong>The quest for social sovereignty #4 - the Bayesian Truth Serum</strong></font></td>
+          </tr>
+        <table class="date-block" style="margin-top: 0.5em; margin-bottom: 0.5em">
+          <tr>
+            <td><i>October 1, 2025</i></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table>
+    <p><img class="image" src="images/4.png" width="100%" style="border-radius:16px;"></img></p>
+    <p>
+      In the previous blog post, we studied moderation mechanisms that rely on
+      oracles, and decided to move on to more decentralized ones. In
+      this and in the following posts, we will share a bit of our research
+      story, going over many of the mechanisms we considered for Information
+      Elicitation Without Verification (IEWV). Our entry point to this area of
+      research was a mechanism trying to address the problem of untruthful
+      replies in surveys.
+    </p>
+    <p>
+      In some surveys, this problem is not pronounced. For instance, in
+      political surveys, a good result for a candidate tends to benefit that
+      candidate, so people already have the incentive to answer truthfully,
+      i.e., to name the candidate they intend to vote on. Deceit in political
+      surveys comes primarily from corruption of the survey organization or
+      from exogenous incentives, such as bribes or threats, not from the
+      mechanism's incentives.
+    </p>
+    <p>
+      However, other kinds of surveys carry incentives that distort the
+      quality of the survey. For example, in a political survey for who is the
+      best candidate, people have the incentive to name the candidate they
+      would like to win and will vote for instead (because his policies
+      benefit the person the most), rather than the candidate they consider
+      the best for the country overall. Again this is because a positive poll
+      result tends to improve the chances of a candidate winning. People also
+      tend to lie when the survey question regards intimate matters or when
+      their answer could be self-incriminating. Furthermore, as of right now,
+      we are experiencing times of significant political violence. Thus, in an
+      opinion survey on a polarizing topic, people might refrain from
+      expressing an opinion that may cause retaliation, if the privacy of the
+      poll were to be compromised.
+    </p>
+    <h2 id="auto-1">The Bayesian Truth Serum<span style="margin-left: 1em"></span></h2>
+    <p>
+      In 2004, Drazen Prelec [<a href="#bib-DrazenPrelec">9</a>] published the Bayesian Truth
+      Serum [<a href="#bib-BayesianTruthSerum">4</a>], or BTS, an extremely clever mechanism to improve
+      survey quality. The idea is that each participant reports not only his
+      belief, called his <em>signal</em>, but also his estimate on which
+      fraction of the other participants will report the same signal. The BTS
+      is a formula to assign to each survey participant, or <em>player</em>, a
+      score, which is meant to be monotonically converted into a monetary
+      payout. Players then have a financial incentive to maximize this score,
+      which is designed to create truth-telling incentives.
+    </p>
+    <p>
+      More precisely, suppose that we have \(n\) players (\(n\) very large)
+      and \(m\) possible choices (\(m\) small). Each player \(i\) reports a
+      signal, seen as an indicator vector \(x_i \in \{ 0, 1 \}^m\), exactly
+      one component of which is \(1\), the others being \(0\). Furthermore,
+      each player \(i\) reports an estimated frequency vector \(y_i \in [0,
+      1]^m\) whose components sum to \(1\), where \(y_{i j}\) is his
+      estimation of the frequency of answer \(j\), i.e., of
+    </p>
+    <center>
+      \begin{eqnarray*}
+  \bar{x}_j & = & \frac{1}{n}  \sum_i x_{i j}
+      .
+\end{eqnarray*}
+    </center>
+    <p>
+      Let \(\bar{y}_j\) be the geometric mean of the estimated frequencies for
+      answer \(j\), i.e.,
+    </p>
+    <center>
+      \begin{eqnarray*}
+  \bar{y}_j & = & \sqrt[n]{\prod_i y_{i j}}
+      .
+\end{eqnarray*}
+    </center>
+    <p>
+      Then a simplified formula for the BTS score of player \(i\) is
+    </p>
+    <center>
+      \(\displaystyle \underbrace{\sum_j x_{i j}
+      \log
+\frac{\bar{x}_j}{\bar{y}_j}}_{\text{information score}} +
+      \alpha
+\underbrace{\sum_j \bar{x}_j \log \frac{y_{i
+      j}}{\bar{x}_j}}_{\text{prediction score}},\)
+    </center>
+    <p>
+      where the constant \(\alpha > 0\) and the base of the logarithms are
+      tuning constants not consequential in this exposition, although we will
+      mention that setting \(\alpha = 1\) makes the scores zero-sum. The
+      formula is made of two terms, an information score and a prediction
+      score. Because \(n\) is large, an individual player cannot hope to
+      affect either \(\bar{x}_j\) or \(\bar{y}_j\) directly, so, from his
+      point of view, his information score depends only on his answer \(x_i\),
+      while his prediction score only on his estimated frequencies \(y_i\).
+      Therefore, rational players seek to maximize both scores independently.
+    </p>
+    <p>
+      The prediction score simplifies to
+    </p>
+    <center>
+      \(\displaystyle \underbrace{\sum_j \bar{x}_j \log y_{i
+      j}}_{\text{logarithmic scoring rule}} +
+\underbrace{\sum_j -\bar{x}_j
+      \log \bar{x}_j .}_{\text{entropy of $\bar{x}$}}\)
+    </center>
+    <p>
+      Since the entropy of the frequency vector is not under the control of
+      player \(i\), he can only hope to maximize the remaining term, which is
+      a strictly proper scoring rule [<a href="#bib-ScoringRule">10</a>], and thus is maximized
+      by \(y_{i j} = \bar{x}_j\), creating truth-telling incentives for the
+      reporting of estimated frequencies.
+    </p>
+    <p>
+      Something more interesting happens with the information score. Since
+      \(x_i\) is an indicator vector, player \(i\) should aim to choose the
+      largest value of \(\log (\bar{x}_j / \bar{y}_j)\) over all answers
+      \(j\). This logarithm measures how &ldquo;surprisingly common&rdquo; the
+      answer is, in that its actual frequency is higher than expected. The
+      brilliance of the BTS is the observation that the signal a player
+      receives influences his estimation of the frequency of the signal,
+      because the player already observed a sample of size one, so to speak.
+      Thus, in a truth-telling Bayesian Nash equilibrium, where players report
+      their answers and estimates truthfully, players that received the same
+      signal will report similarly to player \(i\), while players that receive
+      a different signal will tend to under-estimate the frequency of the
+      signal. This is mere intuition, however. The proof of a truth-telling
+      Bayesian Nash equilibrium has some assumptions and is presented in
+      Prelec's work.
+    </p>
+    <p>
+      If, instead of frequencies, the surveyor, also called the
+      <em>principal</em>, wishes for one definitive answer, for instance to
+      make a decision, he can simply pick a choice \(j\) maximizing the
+      Surprisingly Popular (SP) score [<a href="#bib-BayesianTruthSerumSuprisinglyPopularScore">5</a>] given by
+    </p>
+    <center>
+      \(\displaystyle \bar{x}_j - \frac{1}{n}  \sum_i y_{i j} .\)
+    </center>
+    <p>
+      The careful reader may have noticed that a player can bring the
+      geometric mean \(\bar{y}_j\) to zero simply by estimating a frequency of
+      zero. Indeed, the exposition of the BTS conducted here is simplified. In
+      practice, BTS scores use Laplacian smoothing to avoid degeneration of
+      the geometric mean, as well as a few other tricks, such as &ldquo;leave
+      one out&rdquo; aggregates \(\bar{x}_{- i j}\) and \(\bar{y}_{- i j}\) to
+      ensure players do not directly alter these values at all.
+    </p>
+    <h2 id="auto-2">Applications<span style="margin-left: 1em"></span></h2>
+    <p>
+      The BTS has been extensively used to improve the quality of surveys
+      suffering from truth-telling disincentives. Prelec himself and others
+      have applied the method to surveys on academic integrity [<a href="#bib-BayesianTruthSerumQuestionableResearchPractices">2</a>]
+      and marketing [<a href="#bib-BayesianTruthSerumTruthTellingIncentives">8</a>], but the mechanism has also been applied
+      to Criminology [<a href="#bib-BayesianTruthSerumCriminology">7</a>], information crowd-sourcing via Amazon's
+      Mechanical Turk [<a href="#bib-BayesianTruthSerumMechanicalTurk">1</a>], energy price forecasting [<a href="#bib-BayesianTruthSerumEnergyPriceForecasting">11</a>]
+      and even to Machine Learning [<a href="#bib-MachineTruthSerum">3</a>].
+    </p>
+    <p>
+      Although not directly applying the Bayesian Truth Serum, Th&eacute;o,
+      the French whale who won a huge bet on Donald Trump's election on
+      Polymarket [<a href="#bib-FrenchTrumpPolymarketWhale">6</a>], also relied on surveys of second-order
+      beliefs, asking participants not who they thought would win, but who
+      they thought their neighbors would vote for. Th&eacute;o stated that his
+      surveys countered the &ldquo;shy Trump voter&rdquo; effect, as an answer
+      about a collective reveals less personal beliefs than a direct answer,
+      enabling people to speak with less fear of retaliation.
+    </p>
+    <h2 id="auto-3">Shortcomings of the BTS<span style="margin-left: 1em"></span></h2>
+    <p>
+      The BTS mechanism has a number of disadvantages that prevent its usage
+      in content moderation. First of all, being designed for usage in
+      surveys, the BTS is not collusion-resistant (it is generally accepted
+      that survey participants do not collude). Our analysis assumed that
+      individual players cannot alter the observed frequencies \(\bar{x}_j\)
+      and their estimations \(\bar{y}_j\). However, a large coalition not only
+      can alter these aggregates, but benefit from doing so. The attack
+      consists of the whole of the coalition reporting a very unlikely signal
+      and estimating frequencies truthfully (including their knowledge of the
+      existence of the coalition). Their signal will be extremely
+      &ldquo;surprisingly common,&rdquo; with a very high information score.
+      Furthermore, the knowledge of the coalition and its strategy will make
+      their frequency estimations more accurate than those of honest players.
+    </p>
+    <p>
+      It is clear that mechanisms that require the estimation of frequencies
+      are hard to make collusion resistant. Besides the user experience
+      becoming more cumbersome with this extra report, this is the main reason
+      we will focus our attention on <em>minimal</em> mechanisms, where
+      players only report their observed signal.
+    </p>
+    <p>
+      The BTS also has an assumption of common knowledge of common priors
+      between players, which is very hard to argue for in a diverse crowd,
+      such as in social media. Thus we will also look for mechanisms that are
+      <em>detail-free</em>, i.e., which do not place significant assumptions
+      on the prior knowledge of players.
+    </p>
+    <p>
+      Another problem of the mechanism is the large population of respondents,
+      which, in the simple form we presented, needs to be essentially infinite
+      for the Bayesian Nash equilibrium result to hold. This is another
+      trade-off that applies well to surveys, which interview a large
+      population. In contrast, moderation decisions are made by only a few
+      moderators, so we need mechanisms that work on a <em>small
+      population</em>.
+    </p>
+    <p>
+      Finally, the BTS is a very <em>complex</em> mechanism, with even the
+      simplified version in this blog post already being quite difficult to
+      grasp. Explaining the mechanism to a large population of users is close
+      to impossible. Stating instead that truth-telling maximizes the expected
+      payout is more akin to intimidation than to proper truth-telling
+      incentives. Only if the BTS became popular and mainstream, with
+      independent experts agreeing on the properties of the mechanism and
+      propagating that trust to the public, would the BTS really have
+      truth-telling incentives.
+    </p>
+    <h2 id="auto-4">Conclusion<span style="margin-left: 1em"></span></h2>
+    <p>
+      The BTS is a mechanism to create truth-telling incentives in surveys in
+      exchange for financial compensation of the participants. It is
+      particularly important in surveys where honest reporting is contrary to
+      already existing incentives, such as fear of retaliation or
+      self-incrimination. However, there are a number of issues with the
+      direct application of the BTS to the problem of decentralized
+      moderation, particularly its lack of collusion resistance.
+    </p>
+    <p>
+      In our next blog post, we will continue to explore IEWV mechanisms, and
+      will focus on peer-prediction, covering mechanisms designed for smaller
+      populations, including some improvements on the BTS.
+    </p>
+    <h2 id="auto-5">References<span style="margin-left: 1em"></span></h2>
+    <div class="compact-block" style="text-indent: 0em">
+      <font style="font-size: 84.0%"><dl>
+        <p>
+          <dt>
+            <strong>[1]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-BayesianTruthSerumMechanicalTurk"></a>Morgan R. Frank, Manuel Cebrian, Galen Pickard, and
+              Iyad Rahwan. Validating bayesian truth serum in large-scale
+              online human experiments. <i>PLOS ONE</i>, 12(5):1&ndash;13, 05
+              2017.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[2]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-BayesianTruthSerumQuestionableResearchPractices"></a>Leslie K. John, George Loewenstein, and Drazen
+              Prelec. Measuring the prevalence of questionable research
+              practices with incentives for truth telling. <i>Psychological
+              Science</i>, 23(5):524&ndash;532, 2012. PMID: 22508865.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[3]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-MachineTruthSerum"></a>Tianyi Luo and Yang Liu. Machine truth serum: a
+              surprisingly popular approach to improving ensemble methods.
+              <i>Mach. Learn.</i>, 112(3):789&ndash;815, jul 2022.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[4]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-BayesianTruthSerum"></a>Drazen Prelec. A bayesian truth serum for subjective
+              data. <i>Science</i>, 306:462&ndash;466, 2004.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[5]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-BayesianTruthSerumSuprisinglyPopularScore"></a>Dra&#x017E;en Prelec, H. Sebastian Seung, and John
+              McCoy. A solution to the single-question crowd wisdom problem.
+              <i>Nature</i>, 541, jan 2017.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[6]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-FrenchTrumpPolymarketWhale"></a>Henry Samuel. French trader wins $49m in bets on
+              trump after commissioning unique kind of polls. <a href="https://www.telegraph.co.uk/us/news/2024/11/07/french-trader-wins-49m-bets-trump-commissioning-polls/"><tt>https://www.telegraph.co.uk/us/news/2024/11/07/french-trader-wins-49m-bets-trump-commissioning-polls/</tt></a>,
+              nov 2024.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[7]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-BayesianTruthSerumCriminology"></a>Kyle Thomas. Incentivizing responses to self-report
+              questions in perceptual deterrence studies: an investigation of
+              the validity of deterrence theory using bayesian truth serum.
+              <i>Journal of Quantitative Criminology</i>, 30, 2014.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[8]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-BayesianTruthSerumTruthTellingIncentives"></a>Ray Weaver and Drazen Prelec. Creating truth-telling
+              incentives with the bayesian truth serum. <i>Journal of
+              Marketing Research</i>, 50:289&ndash;302, 2013.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[9]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-DrazenPrelec"></a>Wikipedia. Drazen Prelec &mdash; Wikipedia, the free
+              encyclopedia. <a href="https://en.wikipedia.org/wiki/Drazen_Prelec"><tt>https://en.wikipedia.org/wiki/Drazen_Prelec</tt></a>,
+              2024. [Online; accessed 12-September-2024].
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[10]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-ScoringRule"></a>Wikipedia. Scoring rule &mdash; Wikipedia, the free
+              encyclopedia. <a href="https://en.wikipedia.org/wiki/Scoring_rule"><tt>https://en.wikipedia.org/wiki/Scoring_rule</tt></a>,
+              2024. [Online; accessed 20-October-2024].
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[11]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-BayesianTruthSerumEnergyPriceForecasting"></a>Fan Zhou, Lionel Page, Robert K. Perrons, Zuduo
+              Zheng, and Simon Washington. Long-term forecasts for energy
+              commodities price: what the experts think. <i>Energy
+              Economics</i>, 2019.
+            </p>
+          </dd>
+        </p>
+      </dl></font>
+    </div>
+    <script type="text/javascript" src="citations.js"></script>
+  </body>
+</html>
