@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:x="https://www.texmacs.org/2002/extensions" xmlns:m="http://www.w3.org/1998/Math/MathML">
+  <head>
+    <title>The quest for social sovereignty #5</title>
+    <meta charset="utf-8" content="TeXmacs 2.1.4" name="generator"></meta>
+    <style type="text/css">
+      body { text-align: justify } h5 { display: inline; padding-right: 1em }
+      h6 { display: inline; padding-right: 1em } table { border-collapse:
+      collapse } td { padding: 0.2em; vertical-align: baseline } dt { float:
+      left; min-width: 1.75em; text-align: right; padding-right: 0.75em;
+      font-weight: bold; } dd { margin-left: 2.75em; padding-bottom: 0.25em; }
+      dd p { padding-top: 0em; } .subsup { display: inline; vertical-align:
+      -0.2em } .subsup td { padding: 0px; text-align: left} .fraction {
+      display: inline; vertical-align: -0.8em } .fraction td { padding: 0px;
+      text-align: center } .wide { position: relative; margin-left: -0.4em }
+      .accent { position: relative; margin-left: -0.4em; top: -0.1em }
+      .title-block { width: 100%; text-align: center } .title-block p {
+      margin: 0px } .compact-block p { margin-top: 0px; margin-bottom: 0px }
+      .left-tab { text-align: left } .center-tab { text-align: center }
+      .balloon-anchor { border-bottom: 1px dotted #000000; outline: none;
+      cursor: help; position: relative; } .balloon-anchor [hidden] {
+      margin-left: -999em; position: absolute; display: none; }
+      .balloon-anchor: hover [hidden] { position: absolute; left: 1em; top:
+      2em; z-index: 99; margin-left: 0; width: 500px; display: inline-block; }
+      .balloon-body { } .ornament { border-width: 1px; border-style: solid;
+      border-color: black; display: inline-block; padding: 0.2em; } .right-tab
+      { float: right; position: relative; top: -1em; } .no-breaks {
+      white-space: nowrap; } .underline { text-decoration: underline; }
+      .overline { text-decoration: overline; } .strike-through {
+      text-decoration: line-through; } del { text-decoration: line-through
+      wavy red; } .fill-out { text-decoration: underline dotted; } 
+    </style>
+    <link href="style.css" type="text/css" rel="stylesheet"></link>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" language="javascript"></script>
+  </head>
+  <body>
+    <table class="title-block" style="margin-bottom: 2em">
+      <tr>
+        <td><table class="title-block" style="margin-top: 0.5em; margin-bottom: 0.5em">
+          <tr>
+            <td><font style="font-size: 168.2%"><strong>The quest for social sovereignty
+            #5 - peer prediction</strong></font></td>
+          </tr>
+        </table><table class="date-block" style="margin-top: 0.5em; margin-bottom: 0.5em">
+          <tr>
+            <td><i>October 17, 2025</i></td>
+          </tr>
+        </table></td>
+      </tr>
+    </table>
+    <p><img class="image" src="images/5.png" width="100%" style="border-radius:16px;"></img></p>
+    <p>
+      In our last blog post, we discussed the Bayesian Truth Serum (BTS), a
+      mechanism for Information Elicitation Without Verification (IEWV). That
+      such a mechanism even exists is a non-trivial observation, and the BTS
+      remains relevant in improving survey results, as well as in other
+      applications. However, we also observed several issues which prevent its
+      usage in decentralized moderation.
+    </p>
+    <p>
+      In this blog post, we will establish the properties that we would like
+      our mechanisms to satisfy, and will evaluate several mechanisms we
+      studied according to them, introducing a few in the process.
+    </p>
+    <h2 id="auto-1">Mechanism Desiderata<span style="margin-left: 1em"></span></h2>
+    <p>
+      So that they can be effectively employed in decentralized moderation,
+      IEWV mechanisms should satisfy the following properties as best as
+      possible. We will use the term <em>agent</em>, as is traditional, to
+      refer to mechanism participants other than the principal, who executes
+      the mechanism.
+    </p>
+    <ol>
+      <li>
+        <p>
+          <em>Truthfulness</em>: truth-telling is an incentivized behavior;
+        </p>
+      </li>
+      <li>
+        <p>
+          <em>Collusion resistance</em>: the incentives are maintained even
+          when a sizable portion of agents can communicate and contract;
+        </p>
+      </li>
+      <li>
+        <p>
+          <em>Minimalism</em>: each agent needs only report his observed
+          signal (verdict);
+        </p>
+      </li>
+      <li>
+        <p>
+          <em>Agent heterogeneity</em>: no assumptions about the priors or
+          posteriors of agents are made;
+        </p>
+      </li>
+      <li>
+        <p>
+          <em>Simplicity</em>: the description of the mechanism is easy to
+          understand;
+        </p>
+      </li>
+      <li>
+        <p>
+          <em>Small population</em>: only a few agents are required;
+        </p>
+      </li>
+      <li>
+        <p>
+          <em>Effort incentivization</em>: the incentives persist even if
+          truthful reports are more costly for agents to obtain than random or
+          inaccurate reports; and
+        </p>
+      </li>
+      <li>
+        <p>
+          <em>Flexible risk profiles</em>: agents need not be risk-neutral.
+        </p>
+      </li>
+    </ol>
+    <p>
+      The role of the truthfulness property is clear: we would like to
+      incentivize agents to be honest, and not to deceive. Similarly,
+      collusion-resistance discourages, or at least doesn't incentivize,
+      agents from forming coalitions in order to profit at the expense of
+      honest agents, the mechanism principal and, arguably most importantly,
+      truth-telling. In our previous blog post, we reasoned that minimalism,
+      or at least the absence of frequency reports, is a property necessary
+      for collusion-resistance, and that simplicity, although not strictly
+      necessary once the mechanism gains mainstream adoption, is important to
+      make sure the mechanism's incentives still work before the mechanism
+      becomes well-known. We also mentioned that a small population of agents
+      is essential to keep the mechanism efficient.
+    </p>
+    <p>
+      Effort incentivization is something that we didn't consider yet, but
+      which is quite important. More often than not, telling the truth can be
+      expensive. We already mentioned truth-telling may incur risks to
+      personal safety, but it can be costly in at least two other ways. First,
+      it requires expenditure of cognition. In moderation, the task can be as
+      simple as looking at an image and surfacing a feature, but it can also
+      include reading text. More generally, for fact-checking, a significant
+      amount of research and reasoning can be necessary to evaluate whether a
+      particular proposition is true or false. And a second type of cost is
+      psychological. There are numerous documented pieces of evidence that
+      continuous exposure to certain types of online material or rhetoric can
+      lead to mental health issues. As such, if just guessing without looking
+      is not disincentivized, it is likely that rational agents will choose to
+      perform that behavior.
+    </p>
+    <p>
+      Incidentally, one of the greatest appeals of joining a coalition is to
+      be able to submit reports provided by the coalition coordinator without
+      having to exert truth-telling effort. Thus, as the cost of truth-telling
+      increases, so does the difficulty of maintaining collusion resistance.
+    </p>
+    <p>
+      Risk profiles are commonly modeled by utility curves [<a href="#bib-UnderstandingRiskAversionThroughUtilityTheory">15</a>].
+      A utility curve is essentially a mapping of one's wealth to one's
+      satisfaction (or utility). The model is that agents seek to maximize
+      their expected utility, instead of simply their expected financial
+      position. For most people, the difference in utility between owning
+      nothing and owning 1 BTC is much more pronounced than the difference
+      between owning 1 BTC and owning 2 BTC. Their utility curves are thus
+      concave (see Figure <a href="#fig:utility-curves">1</a>) and they are said to have a
+      conservative risk-profile. Other people are risk-takers, and exhibit a
+      convex utility curve. Contrary to popular belief, while this may indeed
+      mean desperation, it is not necessarily irrational, something we can
+      illustrate with the example of a person trying to fund medical treatment
+      for a loved one, a situation in which most people would gamble if they
+      did not have enough funds or the possibility of a reasonable loan.
+      Finally, when a utility curve is both concave and convex, and thus
+      linear, the agent is said to be risk-neutral.
+    </p>
+    <div style="margin-top: 1em; margin-bottom: 1em">
+      <table style="width: 100%">
+        <tbody><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em"><img src="images/5-utility-curves.png" style="margin-left: 0em; margin-bottom: 0em; margin-right: 0em; margin-top: 0em; vertical-align: 0em; height: 22.4644606060606em"></img></td>
+        </tr><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em; height: 0.5em"></td>
+        </tr><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em; padding-left: 1.5em; padding-right: 1.5em"><div class="caption">
+            <font style="font-size: 84.1%"><p>
+              <b>Figure 1. </b><a id="auto-2"></a><a id="fig:utility-curves"></a>Examples of curves
+              mapping financial positions \(x\) to utilities \(\mu\),
+              illustrating conservative risk profiles (green), risk-neutrality
+              (blue) and risk-taking (red).
+            </p></font>
+          </div></td>
+        </tr></tbody>
+      </table>
+    </div>
+    <p>
+      The problem is that a risk profile close to neutral is most common in
+      very wealthy people, because conservative risk profiles start to appear
+      linear as wealth increases. However, with possible punctual exceptions
+      of moderators that participate for pleasure, people that take moderation
+      jobs do not tend to be wealthy, and may not exhibit risk-neutrality.
+      Thus, it is important for mechanisms to be robust to their agents having
+      different risk profiles.
+    </p>
+    <h2 id="auto-3">The lottery trick<span style="margin-left: 1em"></span></h2>
+    <p>
+      There is a clever trick to allow mechanisms designed only for
+      risk-neutral agents to work with agents of diverse risk profiles, even
+      if those are unknown to the mechanism [<a href="#bib-TheKnowledgeFreePeerPredictionMechanism">19</a>, Section 5.1].
+      First, the mechanism adjusts its payouts to the interval \([0, 1]\) via
+      a simple positive affine transformation. If it would pay \(\phi_i\) to
+      agent \(i\), it pays instead \(\phi_i' = a \phi_i + b\), where \(a > 0\)
+      and \(b\) are coefficients chosen so all \(\phi_i' \in [0, 1]\).
+    </p>
+    <p>
+      Then, instead of the principal performing a direct monetary payment of
+      \(\phi_i'\) to agent \(i\), it interprets \(\phi_i'\) as a probability,
+      and gives agent \(i\) a &ldquo;lottery ticket&rdquo; that pays a
+      constant payout \(P\) with probability \(\phi_i'\) and nothing with
+      probability \(1 - \phi_i'\).
+    </p>
+    <p>
+      Counter-intuitively, this change in compensation has expected utility
+      maximizing agents also seek to maximize the mechanism's payout in
+      expectation. Indeed, under the new method, the expected utility of agent
+      \(i\) is
+    </p>
+    <center>
+      \begin{eqnarray*}
+  \mathbb{E} [\mu_i] & = & \mathbb{E} [\phi_i'] \mu_i
+      (P) + (1 -\mathbb{E}
+  [\phi_i']) \mu_i (0)\\
+  & = & \mu_i (0) + (\mu_i
+      (P) - \mu_i (0)) \mathbb{E} [\phi_i']\\
+  & = & \mu_i (0) + (\mu_i (P) -
+      \mu_i (0)) b + (\mu_i (P) - \mu_i (0))
+  a\mathbb{E}
+      [\phi_i],
+\end{eqnarray*}
+    </center>
+    <p>
+      an affine transformation of \(\mathbb{E} [\phi_i]\) with positive
+      coefficient \(\mu_i (P) - \mu_i (0)\) (we assume \(\mu_i\) to be an
+      increasing function). Thus, maximizing \(\mathbb{E} [\mu_i]\) is
+      equivalent to maximizing \(\mathbb{E} [\phi_i]\).
+    </p>
+    <p>
+      One way to wrap one's head around this fact is to observe that the
+      mechanism only pays two different values to each given agent, \(0\) or
+      \(P\). Since payments in-between are not possible, the shape of their
+      utility curves no longer matter.
+    </p>
+    <p>
+      Because of this trick, which improves mechanism tolerance to different
+      risk profiles, the corresponding desideratum becomes slightly less
+      important, and we will not consider it anymore for the time being.
+    </p>
+    <h2 id="auto-4">Agent heterogeneity<span style="margin-left: 1em"></span></h2>
+    <p>
+      The careful reader will have noticed that we have not yet discussed one
+      desideratum. We left agent heterogeneity for last, as it is the most
+      involved definition. When agent \(i\) performs a task \(t\), he receives
+      a <em>signal</em> \(s_{t i}\) from a set of possible signals \(S\),
+      which is the relevant information acquired during the performance of the
+      task. For example, for image moderation, \(S\) could be the power set of
+      a set of features, such as <tt class="verbatim">violence</tt>, <tt class="verbatim">nudity</tt>
+      and <tt class="verbatim">minors</tt>, thus making the signal \(s_{t i}\) be a
+      subset of those features. For fact checking, we may have \(S = \left\{
+      \texttt{true},
+      \texttt{false}
+\right\}\).
+    </p>
+    <p>
+      A mechanism for heterogeneous agents does not impose assumptions on the
+      distribution of these signals. Many mechanisms do not satisfy this
+      property because they need a precise underlying statistical model for
+      how the signals are generated. This model usually consists of a finite
+      set \(\Theta\) of statistical types for tasks and, for each task \(t\)
+      of type \(\theta_t\) and agent \(i\), a <em>prior</em> distribution of
+      signals \(p_{t i} (s | \theta ) = \Pr [s_{t i} = s | \theta_t = \theta
+      ]\), the probability that \(i\) will receive signal \(s\) if \(t\) has
+      type \(\theta\). Often, for a task \(t\) and distinct agents \(i\) and
+      \(j\), they also model the <em>posterior</em> distribution of signals
+      \(p_{t i j} (s' | s ) = \Pr [s_{t j} = s' | s_{t i} = s ]\), the
+      probability that \(j\) will receive signal \(s'\) given that \(i\)
+      received signal \(s\).
+    </p>
+    <p>
+      Besides this modeling, there are also assumptions of <em>common
+      priors</em> (\(p_{t i} (s | \theta )\) doesn't depend on \(i\)),
+      <em>common knowledge of priors</em> (every agent knows all agents'
+      priors), <em>common posteriors</em> (\(p_{t i j} (s' | s )\) depends
+      neither on \(i\) nor on \(j\)), <em>common knowledge of posteriors</em>
+      (every agent knows all \(p_{t i j}\)) and stochastic relevance, which
+      basically states that \(p_{t i j} (s' | s )\) is a different
+      distribution for each \(s \in S\). Some mechanisms even require priors
+      and posteriors to be available to the mechanism itself, for it to use
+      them in reward calculation.
+    </p>
+    <p>
+      However, this is not acceptable in the context of social media, where
+      users have different ethical, moral and aesthetic preferences, different
+      knowledge and experience baggage and different cultures and community
+      memberships. It would be more accurate to model users as having
+      statistical types than tasks themselves, and even that is questionable.
+      Therefore, we must avoid mechanisms that rely heavily on these
+      statistical assumptions about their agents.
+    </p>
+    <h2 id="auto-5">Peer prediction<span style="margin-left: 1em"></span></h2>
+    <p>
+      The Peer-Prediction Method of Miller, Resnick and Zeckhauser [<a href="#bib-ThePeerPredictionMethod">12</a>]
+      is the quintessential example of a minimal mechanism with truth-telling
+      incentives, but it does have very strong statistical assumptions on
+      agents, namely all those we have listed above. In this mechanism, each
+      agent \(i\) first makes a private report \(r_i\) of their signal to the
+      principal (\(r_i = s_i\) if \(i\) is honest). The principal then, for
+      each agent \(i\), elects a different <em>reference agent</em> \(j\) (not
+      necessarily at random) and rewards \(i\) based on a strictly proper
+      scoring rule [<a href="#bib-ScoringRule">17</a>] of the posterior \(p_t (\cdot | r_i )\)
+      against ground-truth \(r_j\). The idea is that, in a truth-telling
+      equilibrium, \(r_j = s_j\), so, after receiving his signal \(s_i\),
+      agent \(i\)'s best estimate of the distribution of \(r_j\) is the common
+      posterior \(p_t (\cdot | s_i )\). Due to the stochastic relevance
+      assumption, if agent \(i\) would like to maximize his payout, he has no
+      choice but to report \(r_i = s_i\) truthfully.
+    </p>
+    <p>
+      As this method needs homogeneous users and is not collusion resistant,
+      as well as having other issues, we continued our exploration. We
+      considered, in addition, Witkowski's Robust Bayesian Truth Serum (RBTS)
+      [
+      <a href="#bib-RobustBayesianTruthSerum">18</a>
+      ], Zhang's Knowledge-Free Peer-Prediction mechanism (KFPP) [
+      <a href="#bib-TheKnowledgeFreePeerPredictionMechanism">19</a>
+      ] and Jurca and Falting's collusion-resistant mechanism [
+      <a href="#bib-CollusionResistantIncentiveCompatibleFeedbackPayments">4</a>
+      ]. Table
+      <a href="#tab:single-task-peer-prediction-mechanisms">1</a>
+      summarizes the properties of these mechanisms, other ones we've
+      considered so far and the trivial pay-per-task and
+      reward-majority-agreement mechanisms
+      <span style="margin-left: 0em"></span>
+      <a id="footnr-1"></a>
+      <sup><class style="font-style: normal"><a href="#footnote-1">1</a></class></sup>
+      .
+    </p>
+    <div style="margin-top: 1em; margin-bottom: 1em">
+      <table style="width: 100%">
+        <tbody><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em"><table style="display: inline-table; vertical-align: middle">
+            <tbody><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #0000ff20">Mechanism</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">Truth.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">C.R.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">Min.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">U.H.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">Simpl.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">Pop.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">E.I.</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">Pay-per-task</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #00ff0055; text-align: center">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 1\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">Majority Agreement</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ffff0055; text-align: center">A bit</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Odd</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">Community Notes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055; background-color: #ffff0055">Okay</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055; background-color: #ffff0055">Medium</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055; background-color: #ffff0055">A bit</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">Bayesian Truth Serum</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: yellow; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: yellow; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ffff0055; text-align: center">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">Large</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">Peer-Prediction Method</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: yellow; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ffff0055; text-align: center">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">Robust BTS</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: yellow; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: yellow; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ffff0055; text-align: center">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">\(\geqslant 3\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">KFPP</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: yellow; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: yellow; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ffff0055; text-align: center">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center; background-color: #00ff0055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #ff000055; text-align: center">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 3\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid">Jurca and Faltings</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Below</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+            </tr></tbody>
+          </table></td>
+        </tr><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em; height: 0.5em"></td>
+        </tr><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em; padding-left: 1.5em; padding-right: 1.5em"><div class="caption">
+            <font style="font-size: 84.1%"><p>
+              <b>Table 1. </b><a id="auto-6"></a><a id="tab:single-task-peer-prediction-mechanisms"></a>A classification of IEWV
+              mechanisms based on our desiderata. Entries labeled
+              &ldquo;sBNE&rdquo; mean strict Bayesian Nash equilibrium.
+              Entries labeled &ldquo;No&rdquo; also include properties not
+              known to be true.
+            </p></font>
+          </div></td>
+        </tr></tbody>
+      </table>
+    </div>
+    <p>
+      We make a few observations about the content of this table. In majority
+      agreement, agents that are of minority opinion and know of this fact are
+      not incentivized to tell the truth, but to bend to peer-pressure. We
+      considered Community Notes as effort-incentivizing in the sense that
+      raters want to maintain their correct polarity, which requires them to
+      at least read the notes they are rating. Finally, the pay-per-task
+      mechanism resists collusion, but that is only because the payout is
+      constant and thus incentivizes no behavior in particular.
+    </p>
+    <p>
+      The mechanism of Jurca and Faltings has very good truthfulness and
+      collusion resistance. As long as the coalition consists of less than
+      half of the agents (less than one third for cost-effectiveness), with
+      the remaining agents honest, it is a dominant strategy for coalition
+      participants to report honestly (to leave the coalition). Unfortunately,
+      the mechanism has very strong assumptions about the agents, and even
+      requires knowledge of their priors. Nevertheless, such truthful and
+      collusion resistant mechanisms are so rare that we may dedicate a post
+      in the future to this particular mechanism.
+    </p>
+    <p>
+      It seems difficult to come by a mechanism for heterogeneous agents, and
+      this is not a coincidence: it has been demonstrated by Jurca and
+      Faltings that there are no minimal mechanisms for heterogeneous agents
+      where truth-telling is a strict Bayesian Nash equilibrium [<a href="#bib-IncentivesForAnsweringHypotheticalQuestions">5</a>].
+      However, unlike in a survey, there is a hypothesis of that result that
+      we can relax: a single task. Instead of running one instance of the
+      mechanism per task, we can batch tasks and run a mechanism that demands
+      agents to answer all of the tasks in the batch. This allows us to move
+      statistical homogeneity assumptions from the agents to the tasks
+      themselves, finally supporting heterogeneous agents.
+    </p>
+    <h2 id="auto-7">Multi-task peer prediction<span style="margin-left: 1em"></span></h2>
+    <p>
+      We considered several such multi-task mechanisms, including the
+      classical one from Dasgupta and Ghosh (D&amp;G) [<a href="#bib-CrowdsourcedJudgementElicitationWithEndogenousProficiency">2</a>], the
+      Peer Truth Serum (PTS) of Faltings et al. [<a href="#bib-IncentivesToCounterBiasInHumanComputation">3</a>], the Minimal
+      Peer Prediction (MPP) and the Bayesian Truth Serum with Private Priors
+      (BTS-PP) of Radanovic and Faltings [<a href="#bib-IncentivesForSubjectiveEvaluationsWithPrivateBeliefs">13</a>], the Peer Truth
+      Serum for Crowd-sourcing (PTSC) of Radanovic et al. [<a href="#bib-IncentivesForEffortInCrowdsourcingUsingThePeerTruthSerum">14</a>],
+      the Detail-Free Correlated Agreement (CA-DF) of Shnayder et al. [<a
+      href="#bib-InformedTruthfulnessInMultiTaskPeerPrediction">16</a>], the Peer-Prediction with Heterogeneous Tasks (PPHT) of
+      Mandal et al. [<a href="#bib-PeerPredictionWithHeterogeneousTasks">11</a>], the Peer-Prediction with Heterogeneous
+      Users (PPHU) of Agarwal et al. [<a href="#bib-PeerPredictionWithHeterogeneousUsers">1</a>], the Square Root
+      Agreement Rule (SRAR) of Kamble et al. [<a href="#bib-SquareRootAgreementRule">6</a>] and Surrogate
+      Scoring Rules (SRRs) from Liu et al. [<a href="#bib-SurrogateScoringRules">10</a>]. We also found a
+      survey by Lehmann [<a href="#bib-MechanismsForBeliefElicitationWithoutGroundTruth">9</a>] to be very useful.
+    </p>
+    <p>
+      However, the Mutual Information Paradigm (MIP) by Kong and Schoenebeck
+      [<a href="#bib-AnInformationTheoreticFrameworkForDesigningInformationElicitationMechanismsThatRewardTruthTelling">8</a>] and its derived mechanisms Determinant Mutual
+      Information (DMI) and, more generally, Volume Mutual Information (VMI)
+      [<a href="#bib-YuqingKong2024">7</a>], set themselves apart in our eyes. Although they have
+      some assumptions on their few tasks and agents, including that each
+      agent commits to a strategy, they make truth-telling dominantly
+      truthful, meaning that the choice of the honest reporting strategy
+      maximizes returns in expectation irrespective of the choices of other
+      agents. As a welcome bonus, these mechanisms are among the ones of least
+      complexity.
+    </p>
+    <p>
+      We offer Table <a href="#tab:multi-task-peer-prediction-mechanisms">2</a> as a summary of these mechanisms, running
+      the risk of over-simplification and imprecision.
+    </p>
+    <div style="margin-top: 1em; margin-bottom: 1em">
+      <table style="width: 100%">
+        <tbody><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em"><table style="display: inline-table; vertical-align: middle">
+            <tbody><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; background-color: #0000ff20; border-bottom: 0px solid">Mechanism</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20; border-bottom: 0px solid">Truth.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">C.R.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">Min.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">U.H.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">Simpl.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">Pop.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">Tasks</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #0000ff20">E.I.</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">D&amp;G [<a href="#bib-CrowdsourcedJudgementElicitationWithEndogenousProficiency">2</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 3\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 3\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">PTS [<a href="#bib-IncentivesToCounterBiasInHumanComputation">3</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 4\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">MPP [<a href="#bib-IncentivesForSubjectiveEvaluationsWithPrivateBeliefs">13</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 5\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">BTS-PP [<a href="#bib-IncentivesForSubjectiveEvaluationsWithPrivateBeliefs">13</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">wPBE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ffff0055">Var.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">PTSC [<a href="#bib-IncentivesForEffortInCrowdsourcingUsingThePeerTruthSerum">14</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ffff0055">Medium</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">CA-DF [<a href="#bib-InformedTruthfulnessInMultiTaskPeerPrediction">16</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">Almost</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">Large</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">PPHT [<a href="#bib-PeerPredictionWithHeterogeneousTasks">11</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">Almost</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 3\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">PPHU [<a href="#bib-PeerPredictionWithHeterogeneousUsers">1</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">Almost</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">Large</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">SRAR [<a href="#bib-SquareRootAgreementRule">6</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">sBNE</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055">Almost</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055">Okay</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">Large</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">SRRs [<a href="#bib-SurrogateScoringRules">10</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; border-left: 1px solid">DUST</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 3\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">Large</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">No</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid">DMI [<a href="#bib-YuqingKong2024">7</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; border-left: 1px solid">Dom.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055">Okay</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 4\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ffff0055">A bit</td>
+            </tr><tr>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-right: 0px solid; border-right: 0px solid">VMI [<a href="#bib-YuqingKong2024">7</a>]</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; border-left: 1px solid; border-left: 1px solid">Dom.</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055; background-color: #ff000055">No</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #ffff0055; background-color: #ffff0055">Okay</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">\(\geqslant 2\)</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Small</td>
+              <td style="border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; text-align: center; background-color: #00ff0055">Yes</td>
+            </tr></tbody>
+          </table></td>
+        </tr><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em; height: 0.5em"></td>
+        </tr><tr>
+          <td style="text-align: center; padding-left: 0em; padding-right: 0em; padding-left: 1.5em; padding-right: 1.5em"><div class="caption">
+            <font style="font-size: 84.1%"><p>
+              <b>Table 2. </b><a id="auto-8"></a><a id="tab:multi-task-peer-prediction-mechanisms"></a>Multi-task peer prediction
+              mechanisms according to our desiderata. Here &ldquo;wPBE&rdquo;
+              means a weak Perfect Bayesian equilibrium, &ldquo;DUST&rdquo;
+              means Dominant Uniform-Strategy Truthfulness and
+              &ldquo;Dom.&rdquo; stands for dominantly truthful. The BTS-PP
+              mechanism has a variable but manageable number of tasks drawn at
+              random, with the expected amount trading off cost for
+              consistency.
+            </p></font>
+          </div></td>
+        </tr></tbody>
+      </table>
+    </div>
+    <p>
+      We should mention that, in our exposition of multi-task peer prediction
+      mechanisms, we have been making the assumption of binary signals, i.e.,
+      that agents receive one of only two possible signals. For moderation,
+      that would mean that agents report whether or not a piece of content
+      violates a moderation policy. This assumption is due to a result, by
+      Radanovic and Faltings, that there can be no truthful and minimal
+      mechanism for heterogeneous agents unless signals are binary [<a href="#bib-IncentivesForSubjectiveEvaluationsWithPrivateBeliefs">13</a>].
+    </p>
+    <h2 id="auto-9">Conclusion<span style="margin-left: 1em"></span></h2>
+    <p>
+      Unfortunately, we have not been able to come across a single mechanism
+      that satisfies all of our desiderata. In particular, the only truthful
+      and collusion resistant mechanism does not support heterogeneous agents.
+      However, the VMI class of mechanisms comes very close, only
+      fundamentally lacking collusion resistance. We consider them, therefore,
+      as a better social epistemic tool than Community Notes.
+    </p>
+    <p>
+      Before moving on to another direction of research, we would like to
+      dedicate our next blog post to the Mutual Information Paradigm and to
+      the DMI mechanism, as an illustration of a VMI mechanism. We will study
+      both how it could be used in moderation and why it fails to resist
+      collusion.
+    </p>
+    <h2 id="auto-10">References<span style="margin-left: 1em"></span></h2>
+    <div class="compact-block" style="text-indent: 0em">
+      <font style="font-size: 84.0%"><dl>
+        <p>
+          <dt>
+            <strong>[1]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-PeerPredictionWithHeterogeneousUsers"></a>Arpit Agarwal, Debmalya Mandal, David C. Parkes, and
+              Nisarg Shah. Peer prediction with heterogeneous users. <i>ACM
+              Trans. Econ. Comput.</i>, 8(1), mar 2020.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[2]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-CrowdsourcedJudgementElicitationWithEndogenousProficiency"></a>Anirban Dasgupta and Arpita Ghosh. Crowdsourced
+              judgement elicitation with endogenous proficiency. 2013.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[3]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-IncentivesToCounterBiasInHumanComputation"></a>Boi Faltings, Radu Jurca, Pearl Pu, and Bao Duy Tran.
+              Incentives to counter bias in human computation. <i>Proceedings
+              of the AAAI Conference on Human Computation and
+              Crowdsourcing</i>, 2(1):59&ndash;66, Sep. 2014.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[4]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-CollusionResistantIncentiveCompatibleFeedbackPayments"></a>Radu Jurca and Boi Faltings. Collusion-resistant,
+              incentive-compatible feedback payments. In <i>Proceedings of the
+              8th ACM Conference on Electronic Commerce</i>, EC '07, pages
+              200&ndash;209. New York, NY, USA, 2007. Association for
+              Computing Machinery.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[5]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-IncentivesForAnsweringHypotheticalQuestions"></a>Radu Jurca and Boi Faltings. Incentives for answering
+              hypothetical questions. 2011.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[6]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-SquareRootAgreementRule"></a>Vijay Kamble, Nihar Shah, David Marn, Abhay Parekh,
+              and Kannan Ramachandran. The square root agreement rule for
+              incentivizing truthful feedback on online platforms. 2022.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[7]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-YuqingKong2024"></a>Yuqing Kong. Dominantly truthful peer prediction
+              mechanisms with a finite number of tasks. <i>J. ACM</i>,
+              71(2):9&ndash;1, 2024.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[8]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-AnInformationTheoreticFrameworkForDesigningInformationElicitationMechanismsThatRewardTruthTelling"></a>Yuqing Kong and Grant Schoenebeck. An information
+              theoretic framework for designing information elicitation
+              mechanisms that reward truth-telling. 2018.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[9]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-MechanismsForBeliefElicitationWithoutGroundTruth"></a>Niklas Valentin Lehmann. Mechanisms for belief
+              elicitation without ground truth. 2024.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[10]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-SurrogateScoringRules"></a>Yang Liu, Juntao Wang, and Yiling Chen. Surrogate
+              scoring rules. <i>ACM Trans. Econ. Comput.</i>, 10(3), feb 2023.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[11]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-PeerPredictionWithHeterogeneousTasks"></a>Debmalya Mandal, Matthew Leifer, David C. Parkes,
+              Galen Pickard, and Victor Shnayder. Peer prediction with
+              heterogeneous tasks. 2017.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[12]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-ThePeerPredictionMethod"></a>Nolan Miller, Paul Resnick, and Richard Zeckhauser.
+              <i>Eliciting Informative Feedback: The Peer-Prediction
+              Method</i>, pages 185&ndash;212. Springer London, London, 2009.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[13]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-IncentivesForSubjectiveEvaluationsWithPrivateBeliefs"></a>Goran Radanovic and Boi Faltings. Incentives for
+              subjective evaluations with private beliefs. In <i>Proceedings
+              of the Twenty-Ninth AAAI Conference on Artificial
+              Intelligence</i>, AAAI'15, pages 1014&ndash;1020. AAAI Press,
+              2015.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[14]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-IncentivesForEffortInCrowdsourcingUsingThePeerTruthSerum"></a>Goran Radanovic, Boi Faltings, and Radu Jurca.
+              Incentives for effort in crowdsourcing using the peer truth
+              serum. <i>ACM Trans. Intell. Syst. Technol.</i>, 7(4), mar 2016.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[15]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-UnderstandingRiskAversionThroughUtilityTheory"></a>Ashwin Rao. Understanding risk-aversion through
+              utility theory. <a href="https://web.stanford.edu/class/cme241/lecture_slides/UtilityTheoryForRisk.pdf"><tt>https://web.stanford.edu/class/cme241/lecture_slides/UtilityTheoryForRisk.pdf</tt></a>.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[16]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-InformedTruthfulnessInMultiTaskPeerPrediction"></a>Victor Shnayder, Arpit Agarwal, Rafael Frongillo, and
+              David C. Parkes. Informed truthfulness in multi-task peer
+              prediction. 2016.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[17]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-ScoringRule"></a>Wikipedia. Scoring rule &mdash; Wikipedia, the free
+              encyclopedia. <a href="https://en.wikipedia.org/wiki/Scoring_rule"><tt>https://en.wikipedia.org/wiki/Scoring_rule</tt></a>,
+              2024. [Online; accessed 20-October-2024].
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[18]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-RobustBayesianTruthSerum"></a>Jens Witkowski. A robust bayesian truth serum for
+              small populations ( technical report ). 2012.
+            </p>
+          </dd>
+        </p>
+        <p>
+          <dt>
+            <strong>[19]  </strong>
+          </dt>
+          <dd>
+            <p>
+              <a id="bib-TheKnowledgeFreePeerPredictionMechanism"></a>Peter Zhang. Beyond the bayesian truth serum: the
+              knowledge free peer prediction mechanism. Masters, Department of
+              Computer Science and Mathematics, Harvard University, Cambridge,
+              MA, 2013.
+            </p>
+          </dd>
+        </p>
+      </dl></font>
+    </div>
+    <hr>
+    <div class="footnote">
+        <font style="font-size: 77.1%"><div align="justify">
+          <div style="margin-left: 0px">
+            <div style="margin-right: 0px">
+              <class style="font-style: normal"><p>
+                1. Due to the sheer amount of detail in the information
+                compiled in the tables in this post, we are not able to
+                guarantee they are completely correct. We apologize in advance
+                for any imprecision.
+              </p></class>
+            </div>
+          </div>
+        </div></font>
+      </div>
+    <script type="text/javascript" src="footnotes.js"></script>
+    <script type="text/javascript" src="citations.js"></script>
+  </body>
+</html>
